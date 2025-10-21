@@ -91,6 +91,5 @@ public class SupabaseAuthService {
                 .queryParam("redirect_to", redirectTo)
                 .queryParam("scopes", "user:email")
                 .toUriString();
-    }    
-
+    }
 }

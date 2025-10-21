@@ -1,0 +1,16 @@
+services:
+  # サービス定義
+  flask-app:
+    # Dockerfile指定してビルド(contextでディレクトリ指定)
+    build:
+      context: .
+    # コンテナ名(起動後に指定で使うことある)
+    container_name: flask-app
+    # ホスト : コンテナ でポート紐づけ
+    ports:
+      - "5000:5000"
+    # 使用する環境変数ファイル
+    env_file:
+      - ../.env
+    # コンテナ停止時に自動再起動(手動停止は除く)
+    restart: unless-stopped

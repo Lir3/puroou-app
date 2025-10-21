@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>メモ帳</title>
+    <link rel="icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/style.css">
+    <script src="/common.js" defer></script>
+    <script src="/memo.js" defer></script>
+</head>
+<body>
+    <div class="memo-container">
+        <p><span id="user-email"></span>でログイン中 <button id="logout-btn">ログアウト</button></p>
+        <div id="error-message" class="error"></div>
+        <h2>新しいメモ</h2>
+        <input type="text" id="memo-title" placeholder="タイトル">
+        <textarea id="memo-content" rows="4" placeholder="内容"></textarea>
+        <button id="create-memo-btn" class="btn-create">登録する</button>
+
+        <h2>メモ一覧</h2>
+        <ul id="memo-list" class="memo-list"></ul>
+    </div>
+</body>
+</html>
