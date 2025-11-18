@@ -11,7 +11,7 @@
       "version": "3.12"
     },
     "ghcr.io/devcontainers/features/go:1": {
-      "version": "1.21"
+      "version": "1.25"
     },
     "ghcr.io/devcontainers/features/rust:1": {},
     "ghcr.io/devcontainers/features/node:1": {
