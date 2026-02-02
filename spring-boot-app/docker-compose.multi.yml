@@ -1,0 +1,17 @@
+services:
+  # サービス定義
+  spring-boot-app:
+    # Dockerfile指定してビルド(contextでディレクトリ指定)
+    build:
+      context: .
+      dockerfile: Dockerfile.multi
+    # コンテナ名(起動後に指定で使うことある)
+    container_name: spring-boot-app
+    # ホスト : コンテナ でポート紐づけ
+    ports:
+      - "8080:8080"
+    # 使用する環境変数ファイル
+    env_file:
+      - ../.env.multi
+    # コンテナ停止時に自動再起動(手動停止は除く)
+    restart: unless-stopped

@@ -11,11 +11,11 @@
       "version": "3.12"
     },
     "ghcr.io/devcontainers/features/go:1": {
-      "version": "1.25"
+      "version": "1.25"re
     },
     "ghcr.io/devcontainers/features/rust:1": {},
     "ghcr.io/devcontainers/features/node:1": {
-      "version": "22"
+      "version": "24.11.1"
     },
     "ghcr.io/devcontainers/features/docker-in-docker:2": {}
   },

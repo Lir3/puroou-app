@@ -1,9 +1,8 @@
 package com.example.spring_boot_app;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Value; 
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 import java.util.Map;
@@ -17,6 +16,8 @@ public class AuthController {
 
     @Autowired
     private SupabaseAuthService supabaseAuthService;
+    @Value("${frontend.url}")
+    private String frontendUrl;
 
     /**
      * アカウント登録を行います
@@ -26,7 +27,9 @@ public class AuthController {
      */
     @PostMapping("/register")
     public ResponseEntity<Map<String, Object>> register(@RequestBody AuthRequest request, UriComponentsBuilder uriBuilder) {
-        String redirectTo = uriBuilder.replacePath("/").build().toUriString();
+        // 共通メソッドからリダイレクトURLを取得
+        String redirectTo = getRedirectUrl(uriBuilder);
+        
         Map<String, Object> result = supabaseAuthService.signUp(request.getEmail(), request.getPassword(), redirectTo);
         return result.containsKey("id") 
                 ? ResponseEntity.ok(Map.of("message", "Registration successful. Please check your email for confirmation."))
@@ -44,7 +47,7 @@ public class AuthController {
         return ResponseEntity.ok(Map.of("email", user.get("email")));
     }
 
-        /**
+    /**
      * ログインを行います
      * @param request アカウント情報
      * @return 実行結果
@@ -57,27 +60,40 @@ public class AuthController {
                 : ResponseEntity.badRequest().body(result);
     }
 
-        /**
+    /**
      * ログアウトを行います
      * @param authorizationHeader Authorizationヘッダ
      * @return 実行結果
      */
     @PostMapping("/logout")
-   public ResponseEntity<Map<String, Object>> logout(@RequestHeader("Authorization") String authorizationHeader) {
+    public ResponseEntity<Map<String, Object>> logout(@RequestHeader("Authorization") String authorizationHeader) {
         supabaseAuthService.logout(authorizationHeader.substring(7));
         return ResponseEntity.ok(Map.of("message", "Logout successful."));
     }
 
-        /**
+    /**
      * Github認証にリダイレクトします
      * @param response HTTPレスポンス
      * @param uriBuilder URI構築
      */
     @GetMapping("/oauth2/github")
     public void redirectToGitHub(HttpServletResponse response, UriComponentsBuilder uriBuilder) throws IOException {
-        String redirectTo = uriBuilder.replacePath("/").build().toUriString();
+        // 共通メソッドからリダイレクトURLを取得
+        String redirectTo = getRedirectUrl(uriBuilder);
+        
         String supabaseAuthGitHubUrl = supabaseAuthService.getGitHubSignInUrl(redirectTo);
         response.sendRedirect(supabaseAuthGitHubUrl);
+    }
+
+        /**
+     * リダイレクトURLを取得します
+     * @param uriBuilder URI構築
+     * @return リダイレクトURL
+     */
+    private String getRedirectUrl(UriComponentsBuilder uriBuilder) {
+        return !frontendUrl.isEmpty() 
+            ? UriComponentsBuilder.fromUriString(frontendUrl).replacePath("/").build().toUriString() 
+            : uriBuilder.replacePath("/").build().toUriString();
     }
 
 }

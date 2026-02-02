@@ -1,0 +1,6 @@
+include:
+  - spring-boot-app/docker-compose.multi.yml
+  - flask-app/docker-compose.yml
+  - gin-app/docker-compose.yml
+  - actix-web-app/docker-compose.yml
+  - next-app/docker-compose.multi.yml

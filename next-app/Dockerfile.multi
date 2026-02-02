@@ -1,0 +1,47 @@
+# ビルドステージ
+FROM node:24-bullseye AS builder
+
+# 作業ディレクトリ作成
+WORKDIR /app
+
+# アプリライブラリインストール(ビルド時)
+COPY package*.json ./
+RUN npm ci
+
+# ソースコードをコピー
+COPY ./app ./app
+COPY ./lib ./lib
+COPY ./public ./public
+COPY *.ts *.config.mjs tsconfig.json ./
+# 不要なファイル・ディレクトリを削除
+RUN rm -rf ./app/api ./lib/prisma.ts
+
+# 環境変数設定
+ENV NODE_ENV=production
+ARG NEXT_PUBLIC_BACKEND_URL
+ENV NEXT_PUBLIC_BACKEND_URL=$NEXT_PUBLIC_BACKEND_URL
+
+# ビルド
+RUN npm run build
+
+# 実行ステージ
+FROM node:24-bullseye-slim
+
+# 作業ディレクトリ作成
+WORKDIR /app
+
+# OpenSSL ランタイム + CA 証明書 インストール
+RUN apt-get update && \
+    apt-get install -y ca-certificates && \
+    rm -rf /var/lib/apt/lists/*
+
+# アプリライブラリインストール(実行時)
+COPY package*.json ./
+RUN npm ci --omit=dev
+
+# 必要なファイルのみコピー
+COPY --from=builder /app/.next ./.next
+COPY --from=builder /app/public ./public
+
+# Next.jsアプリ起動
+CMD ["npm", "start"]

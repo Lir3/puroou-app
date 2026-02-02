@@ -1,0 +1,10 @@
+# バイナリ
+/target/
+
+# ビルド生成物
+**/*.rs.bk
+
+# Logs / Runtime files
+*.log
+*.tmp
+*.DS_Store
