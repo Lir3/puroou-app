@@ -13,7 +13,7 @@ import {
 import GitHubIcon from '@mui/icons-material/GitHub';
 
 import { useRouter } from 'next/navigation';
-import { apiFetch, errorHandling, getApiUrl} from '@/lib/apiFetch';
+import { apiFetch, errorHandling, getApiUrl } from '@/lib/apiFetch';
 
 // マリオ風のテーマカラー
 const MARIO_COLORS = {
@@ -93,9 +93,9 @@ export default function LoginPage() {
   };
 
   const loginGithub = () => {
-    window.location.href = getApiUrl('/api/auth/oauth2/github');
+    window.location.href = getApiUrl("/auth/login/oauth2/github");
   };
-  
+
 
   return (
     // 全体の背景をマリオの空っぽく
@@ -122,8 +122,8 @@ export default function LoginPage() {
         <CardContent sx={{ padding: '8px !important' }}>
           <Typography
             variant="h5"
-            sx={{ 
-              mb: 3, 
+            sx={{
+              mb: 3,
               color: MARIO_COLORS.RED, // 赤色で強調
               textShadow: '1px 1px 0px black', // 少しレトロな影
               fontWeight: '900',
@@ -139,8 +139,8 @@ export default function LoginPage() {
             label="E-MAIL (プレイヤー名)"
             fullWidth
             type="email"
-            sx={{ 
-              mb: 2, 
+            sx={{
+              mb: 2,
               // 入力フィールドの枠線を少し強調
               '& .MuiOutlinedInput-root': {
                 '& fieldset': {
@@ -162,8 +162,8 @@ export default function LoginPage() {
             label="PASSWORD (パスワード)"
             fullWidth
             type="password"
-            sx={{ 
-              mb: 3, 
+            sx={{
+              mb: 3,
               '& .MuiOutlinedInput-root': {
                 '& fieldset': {
                   borderColor: MARIO_COLORS.BLUE,
@@ -192,9 +192,9 @@ export default function LoginPage() {
               textTransform: 'uppercase',
               boxShadow: `3px 3px 0px black`, // ボタンのレトロな影
               border: `2px solid black`,
-              '&:hover': { 
-                bgcolor: MARIO_COLORS.RED, 
-                opacity: 0.9, 
+              '&:hover': {
+                bgcolor: MARIO_COLORS.RED,
+                opacity: 0.9,
                 boxShadow: `1px 1px 0px black` // ホバー時に影を小さく
               },
             }}
@@ -216,8 +216,8 @@ export default function LoginPage() {
               textTransform: 'uppercase',
               boxShadow: `3px 3px 0px black`,
               border: `2px solid black`,
-              '&:hover': { 
-                bgcolor: MARIO_COLORS.RED, 
+              '&:hover': {
+                bgcolor: MARIO_COLORS.RED,
                 opacity: 0.9,
                 boxShadow: `1px 1px 0px black`
               },
@@ -239,8 +239,8 @@ export default function LoginPage() {
               textTransform: 'uppercase',
               boxShadow: `3px 3px 0px ${MARIO_COLORS.BROWN}`,
               border: `2px solid ${MARIO_COLORS.BROWN}`,
-              '&:hover': { 
-                bgcolor: 'black', 
+              '&:hover': {
+                bgcolor: 'black',
                 opacity: 0.9,
                 boxShadow: `1px 1px 0px ${MARIO_COLORS.BROWN}`
               },
@@ -259,8 +259,8 @@ export default function LoginPage() {
         anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
         onClose={() => setError('')}
       >
-        <Alert 
-          onClose={() => setError('')} 
+        <Alert
+          onClose={() => setError('')}
           severity="error"
           sx={{ fontWeight: 'bold' }} // アラートも強調
         >
@@ -273,8 +273,8 @@ export default function LoginPage() {
         anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
         onClose={() => setSuccessMessage('')}
       >
-        <Alert 
-          onClose={() => setSuccessMessage('')} 
+        <Alert
+          onClose={() => setSuccessMessage('')}
           severity="success"
           sx={{ fontWeight: 'bold' }}
         >

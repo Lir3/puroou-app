@@ -14,7 +14,8 @@ COPY ./lib ./lib
 COPY ./public ./public
 COPY *.ts *.config.mjs tsconfig.json ./
 # 不要なファイル・ディレクトリを削除
-RUN rm -rf ./app/api ./lib/prisma.ts
+# NOTE: app/api は削除しない
+RUN rm -rf ./lib/prisma.ts
 
 # 環境変数設定
 ENV NODE_ENV=production
